@@ -15,11 +15,8 @@ class GETRequest(Request.Request):
 	
 	def process(self, hostListener):
 		#request resource from HostListener
-		#if requested a type of text file
-		if(self.re.resource == "/"):
-			return hostListener.getURI(self.re.resource)
-		#else if media type file is requested
-		elif(any(x in self.re.resource.lower() for x in self.cgiExts)):
+		#if requested a known cgi file
+		if(any(x in self.re.resource.lower() for x in self.cgiExts)):
 			return hostListener.handleCGI(self.re.resource)
 		else:
 			return hostListener.getURI(self.re.resource)
