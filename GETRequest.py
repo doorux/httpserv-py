@@ -3,6 +3,11 @@
 
 import Request
 class GETRequest(Request.Request):
+
+	textExts = [ '.txt',  '.htm', '.html', '.doc', '.dat', '.xml', '.xhtml' ]
+	mediaExts = ['.jpg', '.jpeg', '.png', '.bmp', '.tif', '.tiff', '.ico', 
+				'.raw', '.mov', '.avi', '.mp4', '.mp3', '.mkv', '.rm', '.rmvb']
+
 	def __init__(self, req):
 		self.re = Request.Request(req)
 		print("New GET request")
@@ -13,26 +18,10 @@ class GETRequest(Request.Request):
 	def process(self, hostListener):
 		#request resource from HostListener
 		#if requested a type of text file
-		if(self.re.resource.lower().find('.txt') != -1 
-			or self.re.resource.lower().find('.htm') != -1 
-			or self.re.resource.lower().find('.html') != -1 
-			or self.re.resource.lower().find('.doc') != -1 
-			or self.re.resource.lower().find('.dat') != -1 
-			or self.re.resource.lower().find('.xml') != -1 
-			or self.re.resource.lower().find('.xhtml') != -1
+		if( any(x in self.re.resource.lower() for x in self.textExts)
 			or self.re.resource == "/"):
 			return hostListener.gettextURI(self.re.resource)
 		#else if media type file is requested
-		elif(self.re.resource.lower().find('.jpg') != -1 
-			or self.re.resource.lower().find('.jpeg') != -1 
-			or self.re.resource.lower().find('.png') != -1 
-			or self.re.resource.lower().find('.bmp') != -1 
-			or self.re.resource.lower().find('.tif') != -1 
-			or self.re.resource.lower().find('.tiff') != -1 
-			or self.re.resource.lower().find('.ico') != -1 
-			or self.re.resource.lower().find('.raw') != -1
-			or self.re.resource.lower().find('.mov') != -1
-			or self.re.resource.lower().find('.avi') != -1
-			or self.re.resource.lower().find('.mp4') != -1):
+		elif(any(x in self.re.resource.lower() for x in self.mediaExts)):
 			return hostListener.getmediaURI(self.re.resource)
 		
