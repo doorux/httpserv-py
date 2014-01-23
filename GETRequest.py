@@ -19,8 +19,8 @@ class GETRequest(Request.Request):
 			or self.re.resource.lower().find('.doc') != -1 
 			or self.re.resource.lower().find('.dat') != -1 
 			or self.re.resource.lower().find('.xml') != -1 
-			or self.re.resource.lower().find('.xhtml') != -1)
-			or self.re.resource == "/":
+			or self.re.resource.lower().find('.xhtml') != -1
+			or self.re.resource == "/"):
 			return hostListener.gettextURI(self.re.resource)
 		#else if media type file is requested
 		elif(self.re.resource.lower().find('.jpg') != -1 
@@ -30,8 +30,9 @@ class GETRequest(Request.Request):
 			or self.re.resource.lower().find('.tif') != -1 
 			or self.re.resource.lower().find('.tiff') != -1 
 			or self.re.resource.lower().find('.ico') != -1 
-			or self.re.resource.lower().find('.raw') != -1):
+			or self.re.resource.lower().find('.raw') != -1
+			or self.re.resource.lower().find('.mov') != -1
+			or self.re.resource.lower().find('.avi') != -1
+			or self.re.resource.lower().find('.mp4') != -1):
 			return hostListener.getmediaURI(self.re.resource)
-		elif:
-			return hostListener.gettextURI(self.re.resource)
 		
