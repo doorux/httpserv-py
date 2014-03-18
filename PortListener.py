@@ -5,6 +5,7 @@
 import socket
 import time
 import RequestProcessor
+import signal
 
 class PortListener:
 
@@ -21,10 +22,10 @@ class PortListener:
 		print( self.serversocket.getsockname() )
 		
 	
-	def graceful_shutdown(sig, dummy):
+	def graceful_shutdown(self, sig, dummy):
 		'''shutdown server from SIGINT signal'''
 		print("Shutting down server")
-		import sys.exit
+		import sys
 		self.serversocket.shutdown(0)
 		self.serversocket.close()
 		sys.exit(1)
@@ -76,8 +77,12 @@ class PortListener:
 		
 	def play(self):
 		while 1:
-			self.serversocket.listen(5);
 
+			signal.signal(signal.SIGINT, self.graceful_shutdown)
+
+			self.serversocket.listen(5)
+			
+			
 			#accept connections
 			(clientsocket, address) = self.serversocket.accept()
 			print("Socket open")
@@ -93,6 +98,6 @@ class PortListener:
 			#print("Socket closed") #debug
 			#close socket
 			clientsocket.close()
-			
+		
 		
 		
