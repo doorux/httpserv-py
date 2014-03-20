@@ -7,7 +7,7 @@ class HostListener:
 	def __init__(self, configuration):
 		#interpret configuration
 		self.config = configuration
-		print("New Hostlistener for: " + self.config.getConfig()['host'])
+		print("New Hostlistener for: " + self.config.getHostname())
 		
 	def getURI(self, uri):
 	
@@ -42,3 +42,8 @@ class HostListener:
 		print("CGI Call")
 		return {'status':200, 'content':bytes("Not yet implemented. Bug the developer.".encode())}
 		
+	def getHostname(self):
+		return self.config.getHostname()
+		
+	def getBindAddress(self):
+		return self.config.getBindAddress()

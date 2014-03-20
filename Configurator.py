@@ -9,6 +9,6 @@ class Configurator:
 	
 	def __init__ (self, configFileLoc):
 		#test configFileLocation
-		print(configFileLoc)
-		
+		#print(configFileLoc)
+		pass
 	

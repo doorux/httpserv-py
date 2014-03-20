@@ -9,21 +9,38 @@ import HostListener
 import Configurator
 import Configuration
 import os
+import XMLParser
+import asyncore
 
 #read args
 if(len(sys.argv) > 1):
-	print("GRAG")
+	opts = []
+	args = []
 	try:
-		opts, args = getopt.getopt(sys.argv, "f:")
+		opts, args = getopt.getopt(sys.argv[1:], "f:c:")
+		fFound = False
+		cFound = False
+		for opt, arg in opts:
+			if opt == "-f":
+				if fFound == True:
+					raise getopt.GetoptError("TOO MANY -f ARGS")
+				else:
+					#process -f arg (location of conf file)
+					print("opt: " + opt + " arg: "+arg)
+					fFound = True
+			elif opt == "-c":
+				if cFound:
+					raise getopt.GetoptError("TOO MANY -c ARGS")
+				else:
+					#process -c args (directory of site config files)
+					print("opt: " + opt + " arg: "+arg)
+					fFound = True
+
+					
 	except getopt.GetoptError:
 		print("usage: python httpserv-py.py [-f <config file>]")
 		sys.exit(1)
-		
-	print(opts)
 	
-	for opt, arg in opts:
-		#if opt == "-f":
-		print("opt: " + opt + " arg: "+arg)
 		
 	
 	
@@ -34,20 +51,34 @@ print("Starting server...")
 #Read site configurations (ala simplified apache vhosts)
 hostsDir = './hosts'
 fileNames = [f for f in os.listdir(hostsDir)]
+xmlParser = XMLParser.XMLParser()
+configs = []
+hlisteners = []
+plisteners = []
+
 for fileName in fileNames:
+	fileLoc = hostsDir + "/" + fileName
 	try:
-		with open(hostsDir + '/' + fileName, 'r') as f:
-			print(f.read())
-	except FileNotFoundError as e:
-		print(e)
-		
-myConf = Configuration.Configuration({'host' : 'test.co.uk'})
+	#	print(fileLoc)
+		elems = xmlParser.parse(fileLoc)
+		configs.append(Configuration.Configuration(elems))
 
-#Start Request Processor(s) with specific hosts & configs for each
-host = HostListener.HostListener(myConf)
+	except Exception as xe:
+		print(xe.message)
+		sys.exit(1)
+	
 
-#Start port listeners on all defined ports
-pl = PortListener.PortListener(8080, host)
+for conf in configs:
+	
+	#Start Request Processor(s) with specific hosts & configs for each
+	host = HostListener.HostListener(conf)
+	hlisteners.append(host)
 
-pl.play()
+	#Start port listeners on all defined ports
+	pl = PortListener.PortListener(conf.getPort(), host)
+	plisteners.append(pl)
 
+#for pl in plisteners:
+#	pl.play()
+
+asyncore.loop()
