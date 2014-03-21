@@ -1,0 +1,12 @@
+. Make GZIP compression of files optional based on client support
+. Add directory handling (like apache - look for index.* and serve, or do directory listing)
+. Check on asynchronisity
+. Better comments
+. Add features support to Site Configs
+	... Enable Directory Listing?
+	... If no Hostname, try and get from server somewhere
+	... [Think of other features]
+. Look at necessity of Configurator.py
+. Improve classing/design
+. Fix instances of accessing internal variables directly instead of through getter/setters
+
