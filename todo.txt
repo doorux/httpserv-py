@@ -1,4 +1,4 @@
-. Make GZIP compression of files optional based on client support
+. Make GZIP compression of sent optional based on client support
 . Add directory handling (like apache - look for index.* and serve, or do directory listing)
 . Check on asynchronisity
 . Better comments
@@ -9,4 +9,4 @@
 . Look at necessity of Configurator.py
 . Improve classing/design
 . Fix instances of accessing internal variables directly instead of through getter/setters
-
+. Add support for more HTTP header options like content type and content size
