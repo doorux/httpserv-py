@@ -9,6 +9,8 @@ class Configuration:
 		self.name = configFile['name']
 		self.port = int(configFile['port'])
 		
+		self.documentRoot = configFile['documentRoot']
+		
 		try:
 			self.bindAddress = configFile['bindAddress']
 		except KeyError as ke:
@@ -25,3 +27,6 @@ class Configuration:
 	
 	def getBindAddress(self):
 		return self.bindAddress
+		
+	def getDocumentRoot(self):
+		return self.documentRoot
