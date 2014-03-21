@@ -1,4 +1,5 @@
 <host>
-	<name>spencerplace.me</name>
+	<name>doorux.com</name>
 	<port>8000</port>
+	<documentRoot>/home/ikari/www/</documentRoot>
 </host>

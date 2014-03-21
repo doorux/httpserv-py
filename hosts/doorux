@@ -1,5 +1,5 @@
 <host>
 	<name>doorux.com</name>
 	<port>8082</port>
-	<bindAddress>127.0.0.1</bindAddress>
+	<documentRoot>doorux</documentRoot>
 </host>
