@@ -12,6 +12,14 @@ import os
 import XMLParser
 import asyncore
 
+def graceful_shutdown(self, sig, dummy):
+		'''shutdown server from SIGINT signal'''
+		print("Shutting down server")
+		if(plisteners != null):
+			for pl in plisteners:
+				pl.close_socket()
+		sys.exit(1)
+
 #read args
 if(len(sys.argv) > 1):
 	opts = []
@@ -81,4 +89,9 @@ for conf in configs:
 #for pl in plisteners:
 #	pl.play()
 
-asyncore.loop()
+try:
+	asyncore.loop(timeout=2)
+except KeyboardInterrupt:
+	print(" SIGINT detected. Shutting down server.")
+except Exception as e:
+	print(e)
