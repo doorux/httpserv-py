@@ -27,7 +27,7 @@ class RequestProcessor:
 		else: 
 			#Something ain't right
 			#invalid request
-			print("INVALID REQUEST TYPE")
-			return {'status':404, 'content':"404 NOT FOUND - FURTHERMORE - NOT A VALID REQUEST"}
+			print("INVALID REQUEST TYPE: " + req)
+			return {'status':404, 'content':bytes("404 NOT FOUND - FURTHERMORE - NOT A VALID REQUEST".encode())}
 			
 	
