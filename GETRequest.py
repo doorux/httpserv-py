@@ -8,7 +8,7 @@ class GETRequest(Request.Request):
 
 	def __init__(self, req):
 		self.re = Request.Request(req)
-		print("New GET request")
+		print("New GET request for: " + self.re.resource)
 		
 	def parse(self):
 		print("Parsed...")
